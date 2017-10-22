@@ -1,9 +1,8 @@
 import { ipcRenderer } from 'electron';
 import path from 'path';
 
-const getTeamIcon = function getTeamIcon() {
-  const count = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-
+const getTeamIcon = function getTeamIcon(count = 0) {
+  console.log('getTeamIcon', count);
   let countTeamIconCheck = count;
   document.querySelector('#team_menu').click();
   countTeamIconCheck += 1;
@@ -21,14 +20,14 @@ const getTeamIcon = function getTeamIcon() {
 
   setTimeout(() => {
     document.querySelector('.team_menu').remove();
-    document.querySelector('.ql-editor').focus();
+    document.querySelector('#msg_input .ql-editor').focus();
   }, 10);
 };
 
 module.exports = (Franz) => {
   const getMessages = () => {
     const directMessages = document.querySelectorAll('.p-channel_sidebar__badge').length;
-    const allMessages = document.querySelectorAll('.p-channel_sidebar__channel--unread:not(.channel_sidebar__channel--muted)').length - directMessages;
+    const allMessages = document.querySelectorAll('.p-channel_sidebar__channel--unread:not([class*="p-channel_sidebar__channel--muted"])').length - directMessages;
 
     // set Franz badge
     Franz.setBadge(directMessages, allMessages);
