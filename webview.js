@@ -2,14 +2,18 @@ import { ipcRenderer } from 'electron';
 import path from 'path';
 
 const getTeamIcon = function getTeamIcon(count = 0) {
-  console.log('getTeamIcon', count);
   let countTeamIconCheck = count;
+  let bgUrl = null;
+
   document.querySelector('#team_menu').click();
   countTeamIconCheck += 1;
   const icon = document.querySelector('.team_icon');
-  let bgUrl = window.getComputedStyle(icon, null).getPropertyValue('background-image');
-  bgUrl = /^url\((['"]?)(.*)\1\)$/.exec(bgUrl);
-  bgUrl = bgUrl ? bgUrl[2] : '';
+  if (icon) {
+    bgUrl = window.getComputedStyle(icon, null).getPropertyValue('background-image');
+    bgUrl = /^url\((['"]?)(.*)\1\)$/.exec(bgUrl);
+    bgUrl = bgUrl ? bgUrl[2] : '';
+  }
+
   if (bgUrl) {
     ipcRenderer.sendToHost('avatar', bgUrl);
   } else if (countTeamIconCheck <= 3) {
