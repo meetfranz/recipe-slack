@@ -28,10 +28,12 @@ const getTeamIcon = function getTeamIcon(count = 0) {
   }, 10);
 };
 
+const SELECTOR_CHANNELS_UNREAD = '.p-channel_sidebar__channel--unread:not(.p-channel_sidebar__channel--muted)';
+
 module.exports = (Franz) => {
   const getMessages = () => {
-    const directMessages = document.querySelectorAll('.p-channel_sidebar__badge').length;
-    const allMessages = document.querySelectorAll('.p-channel_sidebar__channel--unread:not([class*="p-channel_sidebar__channel--muted"])').length - directMessages;
+    const directMessages = document.querySelectorAll(SELECTOR_CHANNELS_UNREAD + ' .p-channel_sidebar__badge').length;
+    const allMessages = document.querySelectorAll(SELECTOR_CHANNELS_UNREAD).length - directMessages;
 
     // set Franz badge
     Franz.setBadge(directMessages, allMessages);
