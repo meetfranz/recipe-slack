@@ -1,7 +1,7 @@
 {
   "id": "slack",
   "name": "franz-recipe-slack",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Slack",
   "main": "index.js",
   "author": "Stefan Malzner <stefan@adlk.io>",
