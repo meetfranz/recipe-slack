@@ -5,34 +5,39 @@ const getTeamIcon = function getTeamIcon(count = 0) {
   let countTeamIconCheck = count;
   let bgUrl = null;
 
-  document.querySelector('#team_menu').click();
-  countTeamIconCheck += 1;
-  const icon = document.querySelector('.team_icon');
-  if (icon) {
-    bgUrl = window.getComputedStyle(icon, null).getPropertyValue('background-image');
-    bgUrl = /^url\((['"]?)(.*)\1\)$/.exec(bgUrl);
-    bgUrl = bgUrl ? bgUrl[2] : '';
+  const teamMenu = document.querySelector('#team_menu');
+  if (teamMenu) {
+    teamMenu.click();
+
+    const icon = document.querySelector('.team_icon');
+    if (icon) {
+      bgUrl = window.getComputedStyle(icon, null).getPropertyValue('background-image');
+      bgUrl = /^url\((['"]?)(.*)\1\)$/.exec(bgUrl);
+      bgUrl = bgUrl ? bgUrl[2] : '';
+    }
+
+    setTimeout(() => {
+      document.querySelector('.team_menu').remove();
+      document.querySelector('#msg_input .ql-editor').focus();
+    }, 10);
   }
+
+  countTeamIconCheck += 1;
 
   if (bgUrl) {
     ipcRenderer.sendToHost('avatar', bgUrl);
-  } else if (countTeamIconCheck <= 3) {
+  } else if (countTeamIconCheck <= 5) {
     setTimeout(() => {
       getTeamIcon(countTeamIconCheck + 1);
-    }, 1000);
+    }, 2000);
   }
-
-  setTimeout(() => {
-    document.querySelector('.team_menu').remove();
-    document.querySelector('#msg_input .ql-editor').focus();
-  }, 10);
 };
 
 const SELECTOR_CHANNELS_UNREAD = '.p-channel_sidebar__channel--unread:not(.p-channel_sidebar__channel--muted)';
 
 module.exports = (Franz) => {
   const getMessages = () => {
-    const directMessages = document.querySelectorAll(SELECTOR_CHANNELS_UNREAD + ' .p-channel_sidebar__badge').length;
+    const directMessages = document.querySelectorAll(`${SELECTOR_CHANNELS_UNREAD} .p-channel_sidebar__badge`).length;
     const allMessages = document.querySelectorAll(SELECTOR_CHANNELS_UNREAD).length - directMessages;
 
     // set Franz badge
