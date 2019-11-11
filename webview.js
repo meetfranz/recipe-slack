@@ -5,11 +5,11 @@ const getTeamIcon = function getTeamIcon(count = 0) {
   let countTeamIconCheck = count;
   let bgUrl = null;
 
-  const teamMenu = document.querySelector('#team_menu');
+  const teamMenu = document.querySelector('#team-menu-trigger');
   if (teamMenu) {
     teamMenu.click();
 
-    const icon = document.querySelector('.team_icon');
+    const icon = document.querySelector('.c-team_icon');
     if (icon) {
       bgUrl = window.getComputedStyle(icon, null).getPropertyValue('background-image');
       bgUrl = /^url\((['"]?)(.*)\1\)$/.exec(bgUrl);
@@ -17,8 +17,7 @@ const getTeamIcon = function getTeamIcon(count = 0) {
     }
 
     setTimeout(() => {
-      document.querySelector('.team_menu').remove();
-      document.querySelector('#msg_input .ql-editor').focus();
+      document.querySelector('.ReactModal__Overlay').click();
     }, 10);
   }
 
