@@ -32,7 +32,7 @@ const getTeamIcon = function getTeamIcon(count = 0) {
   }
 };
 
-const SELECTOR_CHANNELS_UNREAD = '.p-channel_sidebar__channel--unread:not(.p-channel_sidebar__channel--muted)';
+const SELECTOR_CHANNELS_UNREAD = '.p-channel_sidebar__channel--unread:not(.p-channel_sidebar__channel--muted),.p-channel_sidebar__link--unread';
 
 module.exports = (Franz) => {
   const getMessages = () => {

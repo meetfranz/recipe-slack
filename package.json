@@ -1,7 +1,7 @@
 {
   "id": "slack",
   "name": "Slack",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Slack",
   "main": "index.js",
   "author": "Stefan Malzner <stefan@adlk.io>",
