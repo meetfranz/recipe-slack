@@ -5,7 +5,7 @@ const getTeamIcon = function getTeamIcon(count = 0) {
   let countTeamIconCheck = count;
   let bgUrl = null;
 
-  const teamMenu = document.querySelector('#team-menu-trigger');
+  const teamMenu = document.querySelector('[data-qa=team-menu-trigger],#team-menu-trigger');
   if (teamMenu) {
     teamMenu.click();
 
