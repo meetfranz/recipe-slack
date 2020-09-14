@@ -5,7 +5,7 @@ const getTeamIcon = function getTeamIcon(count = 0) {
   let countTeamIconCheck = count;
   let bgUrl = null;
 
-  const teamMenu = document.querySelector('#team-menu-trigger');
+  const teamMenu = document.querySelector('.p-ia__sidebar_header__button');
   if (teamMenu) {
     teamMenu.click();
 
@@ -31,7 +31,7 @@ const getTeamIcon = function getTeamIcon(count = 0) {
     }, 2000);
   }
 };
-// c-link p-channel_sidebar__channel p-channel_sidebar__channel--unread
+
 const SELECTOR_CHANNELS_UNREAD = '.p-channel_sidebar__channel--unread:not(.p-channel_sidebar__channel--muted)';
 
 module.exports = (Franz) => {
