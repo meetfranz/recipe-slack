@@ -1,3 +1,7 @@
 #banner {
 	display: none !important;
 }
+
+.p-client__banners.p-ia__workspace_banner {
+  display: none !important;
+}
