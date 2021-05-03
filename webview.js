@@ -32,6 +32,12 @@ const getTeamIcon = function getTeamIcon(count = 0) {
   }
 };
 
+const checkForAppDownloadPrompt = () => {
+  const element = document.querySelector('.p-download_modal__not_now');
+
+  if (element) element.click();
+};
+
 const SELECTOR_CHANNELS_UNREAD = '.p-channel_sidebar__channel--unread:not(.p-channel_sidebar__channel--muted)';
 
 module.exports = (Franz) => {
@@ -46,6 +52,8 @@ module.exports = (Franz) => {
 
   setTimeout(() => {
     getTeamIcon();
+
+    checkForAppDownloadPrompt();
   }, 4000);
 
   // inject franz.css stylesheet
