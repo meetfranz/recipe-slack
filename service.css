@@ -2,6 +2,6 @@
 	display: none !important;
 }
 
-.p-client__banners.p-ia__workspace_banner {
+.p-client__banners.p-ia__workspace_banner, .p-workspace_banner__download_ssb {
   display: none !important;
 }
