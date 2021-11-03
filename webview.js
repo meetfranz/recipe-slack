@@ -33,9 +33,17 @@ const getTeamIcon = function getTeamIcon(count = 0) {
 };
 
 const checkForAppDownloadPrompt = () => {
-  const element = document.querySelector('.p-download_modal__not_now');
-
+  const element = document.querySelector('.p-download_modal__not_now, .c-fullscreen_modal.p-download_modal .p-download_modal__not_now');
   if (element) element.click();
+};
+
+const checkForRedirectScreen = () => {
+  const element = document.querySelector('.p-ssb_redirect__body .c-link');
+  console.log(element);
+
+  if (element) {
+    window.location = element.href;
+  }
 };
 
 const SELECTOR_CHANNELS_UNREAD = '.p-channel_sidebar__channel--unread:not(.p-channel_sidebar__channel--muted)';
@@ -54,6 +62,7 @@ module.exports = (Franz) => {
     getTeamIcon();
 
     checkForAppDownloadPrompt();
+    checkForRedirectScreen();
   }, 4000);
 
   // inject franz.css stylesheet
