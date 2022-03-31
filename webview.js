@@ -46,7 +46,7 @@ const checkForRedirectScreen = () => {
 
 module.exports = (Franz) => {
   const getMessages = () => {
-    const directMessages = document.querySelectorAll('.p-channel_sidebar__channel--muted:not(.p-channel_sidebar__channel--selected) .p-channel_sidebar__badge').length;
+    const directMessages = document.querySelectorAll('.p-channel_sidebar__channel--unread:not(.p-channel_sidebar__channel--muted) .p-channel_sidebar__badge').length;
     const allMessages = document.querySelectorAll('.p-channel_sidebar__channel--unread:not(.p-channel_sidebar__channel--muted):not(.p-channel_sidebar__channel--suggested):not(.p-channel_sidebar__channel--selected) .p-channel_sidebar__name').length - directMessages;
 
     // set Franz badge
