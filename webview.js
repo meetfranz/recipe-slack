@@ -1,7 +1,6 @@
-import { ipcRenderer } from 'electron';
 import path from 'path';
 
-const getTeamIcon = function getTeamIcon(count = 0) {
+const getTeamIcon = (setServiceIcon, count = 0) => {
   let countTeamIconCheck = count;
   let bgUrl = null;
 
@@ -24,10 +23,10 @@ const getTeamIcon = function getTeamIcon(count = 0) {
   countTeamIconCheck += 1;
 
   if (bgUrl) {
-    ipcRenderer.sendToHost('avatar', bgUrl);
+    setServiceIcon(bgUrl);
   } else if (countTeamIconCheck <= 5) {
     setTimeout(() => {
-      getTeamIcon(countTeamIconCheck + 1);
+      getTeamIcon(setServiceIcon, countTeamIconCheck + 1);
     }, 2000);
   }
 };
@@ -39,19 +38,16 @@ const checkForAppDownloadPrompt = () => {
 
 const checkForRedirectScreen = () => {
   const element = document.querySelector('.p-ssb_redirect__body .c-link');
-  console.log(element);
 
   if (element) {
     window.location = element.href;
   }
 };
 
-const SELECTOR_CHANNELS_UNREAD = '.p-channel_sidebar__channel--unread:not(.p-channel_sidebar__channel--muted)';
-
 module.exports = (Franz) => {
   const getMessages = () => {
-    const directMessages = document.querySelectorAll(`${SELECTOR_CHANNELS_UNREAD} .p-channel_sidebar__badge, .p-channel_sidebar__link--unread`).length;
-    const allMessages = document.querySelectorAll(SELECTOR_CHANNELS_UNREAD).length - directMessages;
+    const directMessages = document.querySelectorAll('.p-channel_sidebar__channel--muted:not(.p-channel_sidebar__channel--selected) .p-channel_sidebar__badge').length;
+    const allMessages = document.querySelectorAll('.p-channel_sidebar__channel--unread:not(.p-channel_sidebar__channel--muted):not(.p-channel_sidebar__channel--suggested):not(.p-channel_sidebar__channel--selected) .p-channel_sidebar__name').length - directMessages;
 
     // set Franz badge
     Franz.setBadge(directMessages, allMessages);
@@ -59,7 +55,7 @@ module.exports = (Franz) => {
   Franz.loop(getMessages);
 
   setTimeout(() => {
-    getTeamIcon();
+    getTeamIcon(Franz.setServiceIcon);
 
     checkForAppDownloadPrompt();
     checkForRedirectScreen();
