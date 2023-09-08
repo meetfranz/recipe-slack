@@ -1,23 +1,35 @@
 import path from 'path';
 
+const getHasRailBar = () => document.querySelector('.p-tab_rail');
+
 const getTeamIcon = (setServiceIcon, count = 0) => {
   let countTeamIconCheck = count;
   let bgUrl = null;
 
-  const teamMenu = document.querySelector('.p-ia__sidebar_header__button');
-  if (teamMenu) {
-    teamMenu.click();
+  const hasRailBar = getHasRailBar();
+
+  const teamMenu = document.querySelector('.p-ia__sidebar_header__team_name');
+  if (teamMenu || hasRailBar) {
+    if (!hasRailBar) {
+      teamMenu.click();
+    }
 
     const icon = document.querySelector('.c-team_icon');
+
     if (icon) {
       bgUrl = window.getComputedStyle(icon, null).getPropertyValue('background-image');
       bgUrl = /^url\((['"]?)(.*)\1\)$/.exec(bgUrl);
       bgUrl = bgUrl ? bgUrl[2] : '';
     }
 
-    setTimeout(() => {
-      document.querySelector('.ReactModal__Overlay').click();
-    }, 10);
+    if (!hasRailBar) {
+      setTimeout(() => {
+        const modalOverlay = document.querySelector('.ReactModal__Overlay');
+        if (modalOverlay) {
+          modalOverlay.click();
+        }
+      }, 10);
+    }
   }
 
   countTeamIconCheck += 1;
@@ -46,8 +58,17 @@ const checkForRedirectScreen = () => {
 
 module.exports = (Franz) => {
   const getMessages = () => {
-    const directMessages = document.querySelectorAll('.p-channel_sidebar__channel--unread:not(.p-channel_sidebar__channel--muted) .p-channel_sidebar__badge').length;
-    const allMessages = document.querySelectorAll('.p-channel_sidebar__channel--unread:not(.p-channel_sidebar__channel--muted):not(.p-channel_sidebar__channel--suggested):not(.p-channel_sidebar__channel--selected) .p-channel_sidebar__name').length - directMessages;
+    const hasRailBar = getHasRailBar();
+
+    let directMessages = 0;
+
+    if (hasRailBar) {
+      directMessages = document.querySelectorAll('.p-tab_rail .c-mention_badge').length;
+    } else {
+      directMessages = document.querySelectorAll('.p-channel_sidebar__channel--unread:not(.p-channel_sidebar__channel--muted) .p-channel_sidebar__badge').length;
+    }
+
+    const allMessages = document.querySelectorAll('.p-channel_sidebar__channel--unread:not(.p-channel_sidebar__channel--muted):not(.p-channel_sidebar__channel--suggested):not(.p-channel_sidebar__channel--selected) .p-channel_sidebar__name, .p-unread_dot').length - directMessages;
 
     // set Franz badge
     Franz.setBadge(directMessages, allMessages);
